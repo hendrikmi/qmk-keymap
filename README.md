@@ -22,7 +22,9 @@ Here's how to use it in QMK:
    qmk config user.overlay_dir="$(realpath path/to/qmk-keymap)"
    ```
 
-4. Flash my keymap with
+4. Put keyboard into [bootloader mode](https://docs.qmk.fm/newbs_flashing#put-your-keyboard-into-dfu-bootloader-mode)
+
+5. Flash my keymap with
 
    ```sh
    qmk flash -kb keebio/iris_ce/rev1 -km hendrikmi
