@@ -6,6 +6,7 @@ enum custom_keycodes {
 };
 
 // Special
+#define ENT_LWER LT(_LOWER,KC_ENT)
 #define CTL_ESC LCTL_T(KC_ESC)
 #define SFT_SPC MT(MOD_LSFT,KC_SPC)
 #define CTL_QUOT MT(MOD_RCTL,KC_QUOT)
