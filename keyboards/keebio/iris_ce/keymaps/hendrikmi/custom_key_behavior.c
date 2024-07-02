@@ -3,24 +3,17 @@
 #include "layers.h"
 #include "custom_keycodes.h"
 
-void update_layer_states(bool is_raise_held, bool is_lower_held) {
-    if (is_raise_held && is_lower_held) {
-        layer_off(_RAISE);
-        layer_off(_LOWER);
-        layer_on(_ADJUST);
-    } else if (is_raise_held) {
-        layer_on(_RAISE);
-    } else if (is_lower_held) {
-        layer_on(_LOWER);
-    }
-}
-
-void deactivate_all_layers(void) {
-    layer_off(_ADJUST);
-    layer_off(_RAISE);
-    layer_off(_LOWER);
-}
-
+/**
+ * Handle layer activation:
+ * - If a layer key is held:
+ *     -> Activate the layer until the key is released.
+ * - If a layer key is tapped:
+ *     -> Register the layer as a one-shot layer, active for the next key press.
+ * - If a layer key is double-tapped:
+ *     -> Activate the layer and keep it active until the key is tapped again.
+ * - If both layer keys (e.g., RAISE and LOWER) are held simultaneously:
+ *     -> Activate the ADJUST layer until both keys are released.
+ */
 void handle_layer_activation(uint16_t layer, keyrecord_t *record) {
     static uint16_t tap_timer;
     static bool is_lower_held = false;
@@ -28,6 +21,24 @@ void handle_layer_activation(uint16_t layer, keyrecord_t *record) {
     static bool is_single_tap = false;
     static bool is_layer_toggled = false;
     static uint16_t last_tapped_layer;
+
+    void update_layer_states(bool is_raise_held, bool is_lower_held) {
+        if (is_raise_held && is_lower_held) {
+            layer_off(_RAISE);
+            layer_off(_LOWER);
+            layer_on(_ADJUST);
+        } else if (is_raise_held) {
+            layer_on(_RAISE);
+        } else if (is_lower_held) {
+            layer_on(_LOWER);
+        }
+    }
+
+    void deactivate_all_layers(void) {
+        layer_off(_ADJUST);
+        layer_off(_RAISE);
+        layer_off(_LOWER);
+    }
 
     if (record->event.pressed) {
         bool is_same_layer = (last_tapped_layer == layer);
@@ -68,7 +79,17 @@ void handle_layer_activation(uint16_t layer, keyrecord_t *record) {
     }
 }
 
-// Function to handle the one-shot and swapping behavior of modifiers
+/**
+ * Handle the one-shot and swapping behavior of modifiers:
+ * - If CMD or ALT is held:
+ *     -> Act as the respective modifier (CMD or ALT).
+ * - If CMD or ALT is tapped:
+ *     -> Register the key as a one-shot modifier, active for the next key press.
+ * - If CMD or ALT is double-tapped:
+ *     -> Register a one-shot modifier of the opposite modifier:
+ *         - CMD double-tap registers a one-shot ALT.
+ *         - ALT double-tap registers a one-shot CMD.
+ */
 void handle_mod_swap_oneshot(uint16_t mod_primary, uint16_t mod_secondary, keyrecord_t *record) {
     static uint16_t osm_timer;  // Timer to track tap intervals
     static bool is_single_tap = false;  // State to track if the first tap has occurred
