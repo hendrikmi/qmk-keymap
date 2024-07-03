@@ -2,7 +2,8 @@
 #include "config.h"
 #include "layers.h"
 #include "custom_keycodes.h"
-// #include "print.h"
+// #include "light_layers.h"
+#include "print.h"
 
 // clang-format off
 
@@ -53,9 +54,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
        QK_BOOT, KC_NO,   KC_F10,  KC_F11,  KC_F12,  KC_NO,                              KC_NO,   KC_NO,   KC_NO,   KC_MUTE, KC_VOLD, KC_VOLU,
     //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-       KC_NO,   KC_NO,   KC_F7,   KC_F8,   KC_F9,   KC_NO,                              KC_NO,   KC_NO,   KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT,
+       QK_RBT,  KC_NO,   KC_F7,   KC_F8,   KC_F9,   KC_NO,                              KC_NO,   KC_NO,   KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT,
     //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-       KC_NO,   KC_NO,   KC_F4,   KC_F5,   KC_F6,   KC_NO,                              RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,
+       EE_CLR,  KC_NO,   KC_F4,   KC_F5,   KC_F6,   KC_NO,                              RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,
     //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
        KC_SLEP, KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_NO,   GUI_DEL,          GUI_BSPC,RGB_M_P, RGB_RMOD,RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD,
     //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -66,8 +67,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // clang-format on
 
-// void keyboard_post_init_user(void) {
-//   debug_enable=true;
-//   debug_matrix=true;
-//   debug_keyboard=true;
+void keyboard_post_init_user(void) {
+  debug_enable=true;
+  // debug_matrix=true;
+  // debug_keyboard=true;
+}
+// bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+//     uprintf("led_min: %d - led_max: %d\n", led_min, led_max);
+//
+//     for (uint8_t i = led_min; i < led_max; i++) {
+//         switch(get_highest_layer(layer_state|default_layer_state)) {
+//             case 2:
+//                 rgb_matrix_set_color(i, 0, 0, 120);
+//                 break;
+//             case 1:
+//                 rgb_matrix_set_color(i, 0, 120, 0);
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }
+//     return false;
 // }
