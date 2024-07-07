@@ -2,8 +2,6 @@
 #include "config.h"
 #include "layers.h"
 #include "custom_keycodes.h"
-// #include "light_layers.h"
-#include "print.h"
 
 // clang-format off
 
@@ -18,7 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
        OSM_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_DEL,           KC_BSPC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OSM_RSFT,
     //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                      LGUI_LALT,_LOWER, SFT_SPC,                   ENT_LWR, _RAISE,  RALT_RGUI 
+                                      LGUI_LALT,OSL_LWR,SFT_SPC,                   ENT_LWR, OSL_RSE, RALT_RGUI 
     //                               └────────┴────────┴────────┘                 └────────┴────────┴────────┘
     ),
 
@@ -32,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
        KC_NO,   KC_PMNS, KC_P1,   KC_P2,   KC_P3,   KC_P0,   KC_NO,            ALT_BSPC,ALT_LEFT,ALT_DOWN,ALT_UP,  ALT_RGHT,KC_NO,   KC_NO,
     //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                      _______, _______, _______,                   KC_BSPC, _______, _______ 
+                                      _______, _______, _______,                   KC_BSPC, MO_ADJ,  _______ 
     //                               └────────┴────────┴────────┘                 └────────┴────────┴────────┘
     ),
 
@@ -46,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
        _______, KC_LT,   KC_SLSH, KC_QUOT, KC_DQUO, KC_GRV,  ALT_DEL,          _______, KC_PIPE, KC_SCLN, KC_COLN, KC_BSLS, KC_GT,   _______,
     //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                      _______, _______, KC_DEL,                    _______, _______, _______ 
+                                      _______, MO_ADJ,  KC_DEL,                    _______, _______, _______ 
     //                               └────────┴────────┴────────┘                 └────────┴────────┴────────┘
     ),
 
@@ -54,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
        QK_BOOT, KC_NO,   KC_F10,  KC_F11,  KC_F12,  KC_NO,                              KC_NO,   KC_NO,   KC_NO,   KC_MUTE, KC_VOLD, KC_VOLU,
     //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-       QK_RBT,  KC_NO,   KC_F7,   KC_F8,   KC_F9,   KC_NO,                              KC_NO,   KC_NO,   KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT,
+       QK_RBT,  KC_NO,   KC_F7,   KC_F8,   KC_F9,   KC_NO,                              RGB_LYRS,KC_NO,   KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT,
     //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
        EE_CLR,  KC_NO,   KC_F4,   KC_F5,   KC_F6,   KC_NO,                              RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,
     //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -67,25 +65,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // clang-format on
 
-void keyboard_post_init_user(void) {
-  debug_enable=true;
-  // debug_matrix=true;
-  // debug_keyboard=true;
-}
-// bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-//     uprintf("led_min: %d - led_max: %d\n", led_min, led_max);
-//
-//     for (uint8_t i = led_min; i < led_max; i++) {
-//         switch(get_highest_layer(layer_state|default_layer_state)) {
-//             case 2:
-//                 rgb_matrix_set_color(i, 0, 0, 120);
-//                 break;
-//             case 1:
-//                 rgb_matrix_set_color(i, 0, 120, 0);
-//                 break;
-//             default:
-//                 break;
-//         }
-//     }
-//     return false;
+// void keyboard_post_init_user(void) {
+//   debug_enable=true;
+//   // debug_matrix=true;
+//   // debug_keyboard=true;
 // }

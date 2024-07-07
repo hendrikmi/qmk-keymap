@@ -1,16 +1,22 @@
 #pragma once
 
 enum custom_keycodes {
-    RALT_RGUI = SAFE_RANGE,
-    LGUI_LALT
+    RALT_RGUI = SAFE_RANGE, // One-shot ALT. One-shot CMD when double tapped.
+    LGUI_LALT, // One-shot CMD. One-shot ALT when double tapped.
+    RGB_LYRS // Toggles custom RGB light layers
 };
 
 // Special
-#define ENT_LWR LT(_LOWER,KC_ENT)
 #define CTL_ESC LCTL_T(KC_ESC)
 #define SFT_SPC MT(MOD_LSFT,KC_SPC)
 #define OSM_LSFT OSM(MOD_LSFT)
 #define OSM_RSFT OSM(MOD_RSFT)
+
+//Layers
+#define ENT_LWR LT(_LOWER,KC_ENT)
+#define OSL_LWR OSL(_LOWER)
+#define OSL_RSE OSL(_RAISE)
+#define MO_ADJ MO(_ADJUST)
 
 // Faster deletion
 #define ALT_BSPC LALT(KC_BSPC)
